@@ -5,6 +5,7 @@ from .forms import NewBlog, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import auth
+from django.core.paginator import Paginator
 
 
 def add_comment(request, pk):
@@ -82,3 +83,16 @@ def delete(request, pk):
     blog = get_object_or_404(Blog, pk = pk)
     blog.delete()
     return redirect('home')
+
+
+
+def index(request):
+    blogs = Blog.objects
+    blog_list = Blog.objects.all()
+    paginator = Paginator(blog_list, 2)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
+    return render(request, 'funccrud/funccrud.html', {'blogs':blogs, 'posts':posts})
+
+
+
