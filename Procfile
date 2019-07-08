@@ -1,0 +1,1 @@
+web: gunicorn session-crud.wsgi --log-file -
